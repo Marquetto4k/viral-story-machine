@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Sparkles, Check, ShieldCheck, Clock, TrendingUp, DollarSign,
   Film, Zap, Bot, Calendar, FileText, Library, Star,
@@ -6,7 +6,7 @@ import {
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
-import { goToCheckout } from "@/lib/checkout";
+import { buildCheckoutUrl, fireInitiateCheckout } from "@/lib/checkout";
 import f1 from "@/assets/feature-1-gerador.jpg";
 import f2 from "@/assets/feature-2-referencias.jpg";
 import f3 from "@/assets/feature-3-publicacao.jpg";
@@ -26,9 +26,14 @@ function useCountdown(initial: number) {
 }
 
 function CTA({ children, large = false, label }: { children: React.ReactNode; large?: boolean; label?: string }) {
+  const [href, setHref] = useState<string>("https://ggcheckout.app/checkout/v2/lHi1GjloQAZsTDW5CK0l");
+  useEffect(() => { setHref(buildCheckoutUrl()); }, []);
   return (
-    <button
-      onClick={goToCheckout}
+    <a
+      href={href}
+      target="_self"
+      rel="noopener noreferrer"
+      onClick={() => fireInitiateCheckout()}
       aria-label={label}
       className={`group inline-flex w-full items-center justify-center gap-2 rounded-2xl font-extrabold uppercase tracking-wide text-white transition-transform hover:scale-[1.02] active:scale-[0.98] sm:w-auto ${
         large ? "px-8 py-5 text-base sm:text-lg animate-pulse-pink" : "px-6 py-4 text-sm sm:text-base"
@@ -37,7 +42,7 @@ function CTA({ children, large = false, label }: { children: React.ReactNode; la
     >
       <Sparkles className="h-5 w-5" />
       {children}
-    </button>
+    </a>
   );
 }
 
@@ -58,6 +63,36 @@ function SectionTitle({ kicker, children }: { kicker?: string; children: React.R
 
 export function LandingPage() {
   const { m, s } = useCountdown(14 * 60 + 55);
+  const [unlocked, setUnlocked] = useState(false);
+  const unlockedRef = useRef(false);
+  const [checkoutHref, setCheckoutHref] = useState("https://ggcheckout.app/checkout/v2/lHi1GjloQAZsTDW5CK0l");
+
+  useEffect(() => { setCheckoutHref(buildCheckoutUrl()); }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const UNLOCK_AT = 120;
+    const w = window as unknown as { _wq?: unknown[] };
+    w._wq = w._wq || [];
+    (w._wq as unknown[]).push({
+      id: "dauc3ltw0q",
+      onReady: (video: { bind: (e: string, cb: (t: number) => void) => void }) => {
+        video.bind("secondchange", (t: number) => {
+          if (!unlockedRef.current && t >= UNLOCK_AT) {
+            unlockedRef.current = true;
+            setUnlocked(true);
+          }
+        });
+      },
+    });
+    // Dev/preview helper: allow ?unlock=1 to bypass the gate
+    try {
+      if (new URLSearchParams(window.location.search).get("unlock") === "1") {
+        unlockedRef.current = true;
+        setUnlocked(true);
+      }
+    } catch { /* noop */ }
+  }, []);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
@@ -104,14 +139,19 @@ export function LandingPage() {
             }}
           />
 
-          <div className="mx-auto mt-8 flex max-w-md flex-col items-center gap-3">
-            <CTA large>Quero criar minhas novelinhas</CTA>
-            <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <ShieldCheck className="h-4 w-4 text-pink" /> Pagamento único • Acesso imediato
-            </p>
-          </div>
+          {unlocked && (
+            <div className="mx-auto mt-8 flex max-w-md flex-col items-center gap-3 animate-float-up">
+              <CTA large>Quero criar minhas novelinhas</CTA>
+              <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <ShieldCheck className="h-4 w-4 text-pink" /> Pagamento único • Acesso imediato
+              </p>
+            </div>
+          )}
         </div>
       </section>
+
+      {unlocked && (
+      <div className="animate-float-up">
 
       {/* TUDO ISSO LIBERADO HOJE — vertical stack */}
       <section className="px-4 py-16">
@@ -367,6 +407,19 @@ export function LandingPage() {
           Novelinhas Lucrativas · Todos os direitos reservados
         </p>
       </footer>
+      </div>
+      )}
+      {!unlocked && (
+        <a
+          href={checkoutHref}
+          onClick={() => fireInitiateCheckout()}
+          className="sr-only"
+          aria-hidden="true"
+          tabIndex={-1}
+        >
+          checkout
+        </a>
+      )}
     </div>
   );
 }
