@@ -2,9 +2,9 @@
   command = "bun run build"
   publish = "dist/client"
 
-[functions]
-  directory = ".netlify/functions-internal"
+[build.environment]
+  NODE_VERSION = "22"
 
-# TanStack Start emits a Netlify SSR function during build (target = "netlify").
-# All non-asset routes are routed to the SSR handler via the framework adapter,
-# so no manual /* -> /index.html SPA redirect is needed (and would break SSR).
+# The Netlify TanStack Start Vite plugin writes the SSR handler to
+# .netlify/v1/functions/server.mjs during build. Do not override [functions].directory,
+# or Netlify will look in the wrong folder and skip uploading the SSR function.
