@@ -63,34 +63,35 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.06 0 0);
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(0.12 0.01 320);
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.12 0.01 320);
-  --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.7 0.32 350);
-  --primary-foreground: oklch(0.1 0 0);
-  --secondary: oklch(0.18 0.02 320);
-  --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.16 0.01 320);
-  --muted-foreground: oklch(0.7 0.02 320);
-  --accent: oklch(0.85 0.18 90);
-  --accent-foreground: oklch(0.1 0 0);
-  --destructive: oklch(0.65 0.25 27);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.25 0.05 340 / 40%);
-  --input: oklch(0.2 0.02 320);
-  --ring: oklch(0.7 0.32 350);
-  --neon-pink: oklch(0.72 0.34 350);
-  --neon-pink-glow: oklch(0.78 0.32 340);
-  --gold: oklch(0.86 0.19 90);
-  --gold-deep: oklch(0.78 0.18 75);
-  --gradient-pink: linear-gradient(135deg, oklch(0.72 0.34 350), oklch(0.65 0.32 330));
-  --gradient-gold: linear-gradient(135deg, oklch(0.88 0.2 92), oklch(0.78 0.18 70));
-  --gradient-bg: radial-gradient(ellipse at top, oklch(0.18 0.08 340 / 50%), transparent 60%), radial-gradient(ellipse at bottom, oklch(0.15 0.06 320 / 40%), transparent 60%);
-  --shadow-neon: 0 0 40px oklch(0.72 0.34 350 / 50%), 0 0 80px oklch(0.72 0.34 350 / 25%);
-  --shadow-gold: 0 0 30px oklch(0.86 0.19 90 / 40%);
+  /* Light, off-white identity */
+  --background: oklch(0.985 0.012 85);   /* #FDF8F1-ish */
+  --foreground: oklch(0.18 0 0);          /* near #111 */
+  --card: oklch(1 0 0);                    /* white cards */
+  --card-foreground: oklch(0.18 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0 0);
+  --primary: oklch(0.65 0.27 350);         /* pink #F5299C */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.96 0.01 85);
+  --secondary-foreground: oklch(0.18 0 0);
+  --muted: oklch(0.95 0.01 85);
+  --muted-foreground: oklch(0.42 0 0);     /* near #555 */
+  --accent: oklch(0.86 0.19 90);           /* yellow */
+  --accent-foreground: oklch(0.18 0 0);
+  --destructive: oklch(0.6 0.25 27);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.9 0.01 85);
+  --input: oklch(0.95 0.01 85);
+  --ring: oklch(0.65 0.27 350);
+  --pink: oklch(0.65 0.27 350);
+  --purple: oklch(0.5 0.27 305);          /* #8A19D6 */
+  --yellow: oklch(0.86 0.19 90);
+  --yellow-deep: oklch(0.8 0.18 80);
+  --ink: oklch(0.18 0 0);
+  --gradient-pink: linear-gradient(135deg, oklch(0.65 0.27 350), oklch(0.5 0.27 305));
+  --gradient-yellow: linear-gradient(135deg, oklch(0.88 0.2 92), oklch(0.8 0.18 75));
+  --shadow-soft: 0 6px 24px -8px oklch(0.18 0 0 / 12%), 0 2px 6px -2px oklch(0.18 0 0 / 6%);
+  --shadow-pink: 0 12px 30px -10px oklch(0.65 0.27 350 / 45%);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -157,13 +158,15 @@
 }
 
 @theme inline {
-  --color-neon-pink: var(--neon-pink);
-  --color-gold: var(--gold);
+  --color-pink: var(--pink);
+  --color-purple: var(--purple);
+  --color-yellow: var(--yellow);
+  --color-ink: var(--ink);
 }
 
-@keyframes pulse-neon {
-  0%, 100% { box-shadow: 0 0 30px oklch(0.72 0.34 350 / 60%), 0 0 60px oklch(0.72 0.34 350 / 30%); }
-  50% { box-shadow: 0 0 50px oklch(0.72 0.34 350 / 90%), 0 0 100px oklch(0.72 0.34 350 / 50%); }
+@keyframes pulse-pink {
+  0%, 100% { box-shadow: 0 12px 30px -10px oklch(0.65 0.27 350 / 45%); transform: translateY(0); }
+  50% { box-shadow: 0 18px 40px -10px oklch(0.65 0.27 350 / 65%); transform: translateY(-2px); }
 }
 
 @keyframes float-up {
@@ -171,7 +174,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-pulse-neon { animation: pulse-neon 2s ease-in-out infinite; }
+.animate-pulse-pink { animation: pulse-pink 2.4s ease-in-out infinite; }
 .animate-float-up { animation: float-up 0.8s ease-out both; }
 
 .text-gradient-pink {
@@ -180,8 +183,8 @@
   background-clip: text;
   color: transparent;
 }
-.text-gradient-gold {
-  background: var(--gradient-gold);
+.text-gradient-yellow {
+  background: var(--gradient-yellow);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
