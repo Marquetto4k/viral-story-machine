@@ -298,7 +298,7 @@ export function LandingPage() {
               <div className="mt-8 text-center">
                 <p className="text-sm text-muted-foreground line-through">De R$97,45</p>
                 <p className="mt-1 inline-block bg-yellow px-4 py-1 text-5xl font-black text-ink sm:text-6xl">
-                  R$17,90
+                  R$24,90
                 </p>
                 <p className="mt-2 text-xs uppercase tracking-widest text-muted-foreground">
                   pagamento único
