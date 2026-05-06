@@ -125,87 +125,54 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* NOVA SEÇÃO: Veja tudo que você recebe por dentro */}
+      {/* TUDO ISSO LIBERADO HOJE — vertical stack */}
       <section className="px-4 py-16">
-        <SectionTitle kicker="Por dentro do sistema">
-          Veja tudo que você recebe <span className="text-gradient-pink">por dentro</span>
+        <SectionTitle kicker="O que você recebe">
+          Tudo isso liberado <span className="bg-yellow px-2 text-ink">hoje</span>
         </SectionTitle>
-        <p className="mx-auto -mt-6 mb-10 max-w-2xl text-center text-base text-muted-foreground sm:text-lg">
-          Você terá acesso a ferramentas, roteiros, referências e novelinhas prontas para começar
-          a postar sem precisar criar tudo do zero.
-        </p>
 
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-2 md:auto-rows-[minmax(280px,auto)]">
+        <div className="mx-auto flex max-w-[520px] flex-col gap-8">
           {[
-            { src: f1, alt: "Gerador de Novelinhas", title: "Gerador de Novelinhas", featured: true },
-            { src: f2, alt: "Referências Virais", title: "Referências Virais" },
-            { src: f3, alt: "Publicação Automática", title: "Publicação Automática" },
-            { src: f4, alt: "+1.000 Roteiros prontos", title: "+1.000 Roteiros" },
-            { src: f5, alt: "+1.500 Novelinhas prontas", title: "+1.500 Novelinhas Prontas" },
-          ].map((item, i) => (
-            <figure
-              key={item.title}
-              className={`group overflow-hidden rounded-[20px] border border-border bg-white shadow-[var(--shadow-soft)] transition-transform hover:-translate-y-1 ${
-                item.featured ? "md:col-span-2" : ""
-              }`}
-            >
-              <div className="relative w-full overflow-hidden bg-muted">
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  loading="lazy"
-                  width={1280}
-                  height={896}
-                  className="block h-auto w-full object-contain"
-                />
-              </div>
-              <figcaption className="flex items-center justify-between gap-3 px-5 py-4">
-                <span className="text-base font-black text-ink sm:text-lg">{item.title}</span>
-                <span className="rounded-full bg-yellow px-3 py-1 text-[10px] font-black uppercase tracking-wider text-ink">
-                  Incluso
-                </span>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-
-        <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-muted-foreground sm:text-base">
-          Tudo organizado para você escolher, criar e publicar suas novelinhas com mais facilidade.
-        </p>
-
-        <div className="mx-auto mt-8 flex max-w-md justify-center">
-          <CTA large>Quero acessar agora</CTA>
-        </div>
-      </section>
-
-      {/* O QUE VOCÊ RECEBE */}
-      <section className="px-4 py-16">
-        <SectionTitle kicker="O que você recebe">Tudo isso liberado hoje</SectionTitle>
-        <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-3">
-          {[
-            { n: "01", icon: Bot, title: "Gerador de Novelinhas", text: "Sistema que cria novelinhas completas automaticamente com roteiro pronto, personagens e episódios organizados." },
-            { n: "02", icon: Film, title: "Referências Virais", text: "Acesse ideias e exemplos de novelinhas que já estão viralizando para saber exatamente o que criar." },
-            { n: "03", icon: Calendar, title: "Publicação Automática", text: "Publique ou programe seus episódios sem precisar postar manualmente todos os dias." },
+            { n: "01", src: f1, title: "Gerador de Novelinhas", text: "Crie novelinhas completas com personagens, episódios e roteiro pronto em poucos minutos." },
+            { n: "02", src: f2, title: "Referências Virais", text: "Veja ideias e exemplos de conteúdos que já estão em alta para criar com mais segurança." },
+            { n: "03", src: f3, title: "Publicação Automática", text: "Organize e programe suas publicações para manter frequência sem precisar postar manualmente." },
+            { n: "04", src: f4, title: "+1.000 Roteiros", text: "Acesse roteiros prontos para transformar ideias em vídeos curtos com mais rapidez." },
+            { n: "05", src: f5, title: "+1.500 Novelas Prontas", text: "Receba novelinhas prontas para usar, adaptar e começar a postar imediatamente." },
           ].map((c) => (
-            <div
+            <article
               key={c.n}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-white p-6 shadow-[var(--shadow-soft)] transition-all hover:-translate-y-1"
+              className="overflow-hidden rounded-[18px] border-2 border-pink/60 bg-white p-5 shadow-[var(--shadow-soft)] transition-transform hover:-translate-y-1 sm:p-6"
             >
-              <div className="absolute -right-3 -top-4 select-none text-7xl font-black text-pink/10">
-                {c.n}
-              </div>
-              <div className="relative">
-                <div
-                  className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl text-white"
+              <div className="flex items-center gap-3">
+                <span
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-base font-black text-white"
                   style={{ background: "var(--gradient-pink)" }}
                 >
-                  <c.icon className="h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-bold text-ink">{c.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.text}</p>
+                  {c.n}
+                </span>
+                <h3 className="text-xl font-black leading-tight text-ink sm:text-2xl">
+                  <span className="text-gradient-pink">{c.title}</span>
+                </h3>
               </div>
-            </div>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                {c.text}
+              </p>
+              <div className="mt-5 overflow-hidden rounded-2xl">
+                <img
+                  src={c.src}
+                  alt={c.title}
+                  loading="lazy"
+                  width={1080}
+                  height={1080}
+                  className="block h-auto w-full"
+                />
+              </div>
+            </article>
           ))}
+        </div>
+
+        <div className="mx-auto mt-10 flex max-w-md justify-center">
+          <CTA large>Quero acessar agora</CTA>
         </div>
       </section>
 
