@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  Play, Sparkles, Check, ShieldCheck, Clock, TrendingUp, DollarSign,
+  Sparkles, Check, ShieldCheck, Clock, TrendingUp, DollarSign,
   Film, Zap, Bot, Calendar, FileText, Library, Star,
 } from "lucide-react";
 import {
@@ -91,30 +91,18 @@ export function LandingPage() {
           </p>
 
           <p className="mt-8 text-xs font-bold uppercase tracking-wider text-pink sm:text-sm">
-            ▼ O vídeo tem apenas 1 minuto. Assista para entender como funciona ▼
+            Veja como funciona o sistema que cria novelinhas virais automaticamente
+          </p>
+          <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
+            O vídeo tem apenas 1 minuto. Assista para entender como funciona.
           </p>
 
-          <div className="mx-auto mt-4 w-full max-w-3xl">
-            <div
-              className="relative overflow-hidden rounded-2xl border-4 border-white bg-card"
-              style={{ boxShadow: "var(--shadow-pink)" }}
-            >
-              <div className="relative aspect-video w-full bg-gradient-to-br from-[oklch(0.96_0.02_320)] to-[oklch(0.92_0.05_305)]">
-                <div className="flex h-full w-full flex-col items-center justify-center gap-3 text-center">
-                  <div
-                    className="flex h-20 w-20 items-center justify-center rounded-full text-white"
-                    style={{ background: "var(--gradient-pink)", boxShadow: "var(--shadow-pink)" }}
-                  >
-                    <Play className="h-10 w-10 fill-white" />
-                  </div>
-                  <p className="px-4 text-sm font-semibold text-muted-foreground">
-                    Espaço reservado para sua VSL (16:9)
-                  </p>
-                </div>
-                {/* Replace with: <iframe className="absolute inset-0 h-full w-full" src="..." allow="autoplay; fullscreen" /> */}
-              </div>
-            </div>
-          </div>
+          <div
+            className="vsl-wrapper mx-auto mt-6"
+            dangerouslySetInnerHTML={{
+              __html: `<wistia-player media-id="dauc3ltw0q" aspect="0.75"></wistia-player>`,
+            }}
+          />
 
           <div className="mx-auto mt-8 flex max-w-md flex-col items-center gap-3">
             <CTA large>Quero criar minhas novelinhas</CTA>
