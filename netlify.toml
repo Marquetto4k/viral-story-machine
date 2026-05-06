@@ -1,0 +1,10 @@
+[build]
+  command = "bun run build"
+  publish = "dist/client"
+
+[functions]
+  directory = ".netlify/functions-internal"
+
+# TanStack Start emits a Netlify SSR function during build (target = "netlify").
+# All non-asset routes are routed to the SSR handler via the framework adapter,
+# so no manual /* -> /index.html SPA redirect is needed (and would break SSR).
