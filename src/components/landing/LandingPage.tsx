@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import {
   Sparkles, Check, ShieldCheck, Clock, TrendingUp, DollarSign,
   Film, Zap, Bot, Calendar, FileText, Library, Star,
@@ -61,6 +61,18 @@ function SectionTitle({ kicker, children }: { kicker?: string; children: React.R
   );
 }
 
+// Memoized VSL — never re-renders, keeping the Wistia player stable in the DOM.
+const VSL = memo(function VSL() {
+  return (
+    <div
+      className="vsl-wrapper mx-auto mt-6"
+      dangerouslySetInnerHTML={{
+        __html: `<wistia-player media-id="dauc3ltw0q" aspect="0.75"></wistia-player>`,
+      }}
+    />
+  );
+});
+
 export function LandingPage() {
   const { m, s } = useCountdown(14 * 60 + 55);
   const [unlocked, setUnlocked] = useState(false);
@@ -72,7 +84,9 @@ export function LandingPage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const UNLOCK_AT = 120;
-    const w = window as unknown as { _wq?: unknown[] };
+    const w = window as unknown as { _wq?: unknown[]; __vslBound?: boolean };
+    if (w.__vslBound) return;
+    w.__vslBound = true;
     w._wq = w._wq || [];
     (w._wq as unknown[]).push({
       id: "dauc3ltw0q",
@@ -126,12 +140,7 @@ export function LandingPage() {
             O vídeo tem apenas 2 minutos e sem enrolações mostrando exatamente como funciona
           </p>
 
-          <div
-            className="vsl-wrapper mx-auto mt-6"
-            dangerouslySetInnerHTML={{
-              __html: `<wistia-player media-id="dauc3ltw0q" aspect="0.75"></wistia-player>`,
-            }}
-          />
+          <VSL />
 
           {unlocked && (
             <div className="mx-auto mt-8 flex max-w-md flex-col items-center gap-3 animate-float-up">
