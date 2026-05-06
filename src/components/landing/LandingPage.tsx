@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import {
   Sparkles, Check, ShieldCheck, Clock, TrendingUp, DollarSign,
   Film, Zap, Bot, Calendar, FileText, Library, Star,
