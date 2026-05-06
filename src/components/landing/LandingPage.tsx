@@ -116,13 +116,11 @@ export function LandingPage() {
             <Bot className="h-3.5 w-3.5" /> IA • TikTok • Dólar
           </span>
           <h1 className="mx-auto max-w-[900px] text-balance px-2 font-black tracking-tight text-ink text-[30px] leading-[1.15] sm:text-[44px] sm:leading-[1.1] md:text-[56px]">
-            Crie <span className="text-gradient-pink">Novelinhas Virais</span> automaticamente
-            <br className="hidden sm:block" /> e ganhe em <span className="text-gradient-pink">dólar</span>{" "}
-            no <span className="relative inline-block bg-yellow px-2 text-ink">TikTok</span>
+            Veja como eu ganhei <span className="text-gradient-pink">$1.800</span> postando Novelinhas no <span className="relative inline-block bg-yellow px-2 text-ink">TikTok</span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl px-2 font-extrabold text-ink text-[18px] sm:text-[24px]">
-            Veja como eu ganhei <span className="text-gradient-pink">$1.800</span> postando Novelinhas no TikTok
+            Crie <span className="text-gradient-pink">Novelinhas Virais</span> automaticamente e ganhe em <span className="text-gradient-pink">dólar</span> no TikTok
           </p>
           <p className="mx-auto mt-2 max-w-xl px-2 text-[14px] sm:text-[16px]" style={{ color: "#555555" }}>
             O vídeo tem apenas 2 minutos e sem enrolações mostrando exatamente como funciona
