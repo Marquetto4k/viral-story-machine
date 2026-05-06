@@ -115,21 +115,17 @@ export function LandingPage() {
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink/30 bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-pink shadow-sm">
             <Bot className="h-3.5 w-3.5" /> IA • TikTok • Dólar
           </span>
-          <h1 className="text-balance text-3xl font-black leading-[1.1] tracking-tight text-ink sm:text-5xl md:text-6xl">
+          <h1 className="mx-auto max-w-[900px] text-balance px-2 font-black tracking-tight text-ink text-[30px] leading-[1.15] sm:text-[44px] sm:leading-[1.1] md:text-[56px]">
             Crie <span className="text-gradient-pink">Novelinhas Virais</span> automaticamente
             <br className="hidden sm:block" /> e ganhe em <span className="text-gradient-pink">dólar</span>{" "}
             no <span className="relative inline-block bg-yellow px-2 text-ink">TikTok</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base text-muted-foreground sm:text-lg">
-            A inteligência artificial cria histórias completas com personagens e episódios prontos
-            para você postar todos os dias <strong className="text-ink">sem precisar pensar, escrever ou editar</strong>.
-          </p>
 
-          <p className="mt-8 text-xs font-bold uppercase tracking-wider text-pink sm:text-sm">
-            Veja como funciona o sistema que cria novelinhas virais automaticamente
+          <p className="mx-auto mt-6 max-w-2xl px-2 font-extrabold text-ink text-[18px] sm:text-[24px]">
+            Veja como eu ganhei <span className="text-gradient-pink">$1.800</span> postando Novelinhas no TikTok
           </p>
-          <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
-            O vídeo tem apenas 1 minuto. Assista para entender como funciona.
+          <p className="mx-auto mt-2 max-w-xl px-2 text-[14px] sm:text-[16px]" style={{ color: "#555555" }}>
+            O vídeo tem apenas 2 minutos e sem enrolações mostrando exatamente como funciona
           </p>
 
           <div
