@@ -150,8 +150,6 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    background-image: var(--gradient-bg);
-    background-attachment: fixed;
     font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
   }
