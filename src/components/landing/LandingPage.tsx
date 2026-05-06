@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  Play, Sparkles, Check, ShieldCheck, Clock, TrendingUp, DollarSign,
+  Sparkles, Check, ShieldCheck, Clock, TrendingUp, DollarSign,
   Film, Zap, Bot, Calendar, FileText, Library, Star,
 } from "lucide-react";
 import {
