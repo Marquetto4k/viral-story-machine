@@ -333,13 +333,16 @@ export function LandingPage() {
                 </p>
               </div>
 
-              <button
-                onClick={goToCheckout}
+              <a
+                href={checkoutHref}
+                target="_self"
+                rel="noopener noreferrer"
+                onClick={() => fireInitiateCheckout()}
                 className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-5 text-base font-black uppercase tracking-wide text-white sm:text-lg animate-pulse-pink"
                 style={{ background: "var(--gradient-pink)", boxShadow: "var(--shadow-pink)" }}
               >
                 <Sparkles className="h-5 w-5" /> Comprar agora
-              </button>
+              </a>
 
               <p className="mt-3 text-center text-xs text-muted-foreground">
                 🔒 Compra 100% segura • Acesso imediato
