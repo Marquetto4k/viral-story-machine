@@ -84,28 +84,67 @@ export function LandingPage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const UNLOCK_AT = 120;
-    const w = window as unknown as { _wq?: unknown[]; __vslBound?: boolean };
-    if (w.__vslBound) return;
-    w.__vslBound = true;
-    w._wq = w._wq || [];
-    (w._wq as unknown[]).push({
-      id: "dauc3ltw0q",
-      onReady: (video: { bind: (e: string, cb: (t: number) => void) => void }) => {
-        video.bind("secondchange", (t: number) => {
-          if (!unlockedRef.current && t >= UNLOCK_AT) {
-            unlockedRef.current = true;
-            setUnlocked(true);
-          }
-        });
-      },
-    });
+    const w = window as unknown as {
+      _wq?: Array<Record<string, unknown>>;
+      __vslBound?: boolean;
+    };
+
+    const unlock = (reason: string) => {
+      if (unlockedRef.current) return;
+      unlockedRef.current = true;
+      setUnlocked(true);
+      console.log("Conteúdo liberado aos 120s", reason);
+    };
+
+    const onTime = (t: number) => {
+      if (!unlockedRef.current && t >= UNLOCK_AT) unlock("secondchange");
+    };
+
+    if (!w.__vslBound) {
+      w.__vslBound = true;
+      w._wq = w._wq || [];
+      w._wq.push({
+        id: "dauc3ltw0q",
+        onReady: (video: { bind: (e: string, cb: (t: number) => void) => void }) => {
+          console.log("Wistia player encontrado (onReady)");
+          video.bind("secondchange", onTime);
+        },
+      });
+    }
+
+    // Fallback: bind directly to <wistia-player> web component once it's in the DOM.
+    let bound = false;
+    const tryBindElement = () => {
+      if (bound) return true;
+      const el = document.querySelector('wistia-player[media-id="dauc3ltw0q"]') as
+        | (HTMLElement & { addEventListener: HTMLElement["addEventListener"] })
+        | null;
+      if (!el) return false;
+      bound = true;
+      console.log("Wistia player encontrado (element)");
+      el.addEventListener("secondchange", (e: Event) => {
+        const detail = (e as CustomEvent<number | { seconds?: number }>).detail;
+        const t = typeof detail === "number" ? detail : detail?.seconds ?? 0;
+        onTime(t);
+      });
+      el.addEventListener("timeupdate", (e: Event) => {
+        const target = e.target as { currentTime?: number } | null;
+        if (target?.currentTime != null) onTime(target.currentTime);
+      });
+      return true;
+    };
+    const pollId = window.setInterval(() => {
+      if (tryBindElement() || unlockedRef.current) window.clearInterval(pollId);
+    }, 500);
+
     // Dev/preview helper: allow ?unlock=1 to bypass the gate
     try {
       if (new URLSearchParams(window.location.search).get("unlock") === "1") {
-        unlockedRef.current = true;
-        setUnlocked(true);
+        unlock("query");
       }
     } catch { /* noop */ }
+
+    return () => window.clearInterval(pollId);
   }, []);
 
   return (
