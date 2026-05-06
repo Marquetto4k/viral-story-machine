@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import {
   Sparkles, Check, ShieldCheck, Clock, TrendingUp, DollarSign,
   Film, Zap, Bot, Calendar, FileText, Library, Star,
@@ -76,86 +76,21 @@ const VSL = memo(function VSL() {
 export function LandingPage() {
   const { m, s } = useCountdown(14 * 60 + 55);
   const [unlocked, setUnlocked] = useState(false);
-  const unlockedRef = useRef(false);
   const [checkoutHref, setCheckoutHref] = useState("https://ggcheckout.app/checkout/v2/lHi1GjloQAZsTDW5CK0l");
 
   useEffect(() => { setCheckoutHref(buildCheckoutUrl()); }, []);
 
+  // Liberação simples por timer (75s após carregamento)
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const UNLOCK_AT = 60;
-    const w = window as unknown as {
-      _wq?: Array<Record<string, unknown>>;
-      __vslBound?: boolean;
-    };
-
-    const unlock = (reason: string) => {
-      if (unlockedRef.current) return;
-      unlockedRef.current = true;
-      setUnlocked(true);
-      console.log("Conteúdo liberado aos 60s", reason);
-    };
-
-    const onTime = (t: number) => {
-      if (!unlockedRef.current && t >= UNLOCK_AT) unlock("secondchange");
-    };
-
-    if (!w.__vslBound) {
-      w.__vslBound = true;
-      w._wq = w._wq || [];
-      w._wq.push({
-        id: "dauc3ltw0q",
-        onReady: (video: { bind: (e: string, cb: (t: number) => void) => void }) => {
-          console.log("Wistia player encontrado (onReady)");
-          video.bind("secondchange", onTime);
-        },
-      });
-    }
-
-    // Fallback: bind directly to <wistia-player> web component once it's in the DOM.
-    let bound = false;
-    const tryBindElement = () => {
-      if (bound) return true;
-      const el = document.querySelector('wistia-player[media-id="dauc3ltw0q"]') as
-        | (HTMLElement & { addEventListener: HTMLElement["addEventListener"] })
-        | null;
-      if (!el) return false;
-      bound = true;
-      console.log("Wistia player encontrado (element)");
-      el.addEventListener("secondchange", (e: Event) => {
-        const detail = (e as CustomEvent<number | { seconds?: number }>).detail;
-        const t = typeof detail === "number" ? detail : detail?.seconds ?? 0;
-        onTime(t);
-      });
-      el.addEventListener("timeupdate", (e: Event) => {
-        const target = e.target as { currentTime?: number } | null;
-        if (target?.currentTime != null) onTime(target.currentTime);
-      });
-      return true;
-    };
-    const pollId = window.setInterval(() => {
-      if (tryBindElement() || unlockedRef.current) window.clearInterval(pollId);
-    }, 500);
-
-    // Dev/preview helper: allow ?unlock=1 to bypass the gate
+    const UNLOCK_DELAY_MS = 75000;
     try {
       if (new URLSearchParams(window.location.search).get("unlock") === "1") {
-        unlock("query");
+        setUnlocked(true);
+        return;
       }
     } catch { /* noop */ }
-
-    return () => window.clearInterval(pollId);
-  }, []);
-
-  // Fallback de segurança: libera após 120s de permanência na página caso a API da Wistia falhe
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      if (!unlockedRef.current) {
-        unlockedRef.current = true;
-        setUnlocked(true);
-        console.log("Conteúdo liberado por fallback de tempo");
-      }
-    }, 60000);
+    const timer = window.setTimeout(() => setUnlocked(true), UNLOCK_DELAY_MS);
     return () => window.clearTimeout(timer);
   }, []);
 
