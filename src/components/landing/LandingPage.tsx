@@ -84,7 +84,9 @@ export function LandingPage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const UNLOCK_AT = 120;
-    const w = window as unknown as { _wq?: unknown[] };
+    const w = window as unknown as { _wq?: unknown[]; __vslBound?: boolean };
+    if (w.__vslBound) return;
+    w.__vslBound = true;
     w._wq = w._wq || [];
     (w._wq as unknown[]).push({
       id: "dauc3ltw0q",
