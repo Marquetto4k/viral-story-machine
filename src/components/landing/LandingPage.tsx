@@ -83,7 +83,7 @@ export function LandingPage() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const UNLOCK_AT = 120;
+    const UNLOCK_AT = 60;
     const w = window as unknown as {
       _wq?: Array<Record<string, unknown>>;
       __vslBound?: boolean;
@@ -93,7 +93,7 @@ export function LandingPage() {
       if (unlockedRef.current) return;
       unlockedRef.current = true;
       setUnlocked(true);
-      console.log("Conteúdo liberado aos 120s", reason);
+      console.log("Conteúdo liberado aos 60s", reason);
     };
 
     const onTime = (t: number) => {
@@ -155,7 +155,7 @@ export function LandingPage() {
         setUnlocked(true);
         console.log("Conteúdo liberado por fallback de tempo");
       }
-    }, 120000);
+    }, 60000);
     return () => window.clearTimeout(timer);
   }, []);
 
