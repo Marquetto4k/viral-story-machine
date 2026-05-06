@@ -31,14 +31,18 @@ declare global {
   }
 }
 
+export function fireInitiateCheckout() {
+  if (typeof window === "undefined") return;
+  try {
+    window.fbq?.("track", "InitiateCheckout");
+  } catch {
+    // ignore
+  }
+}
+
 export function goToCheckout(e?: { preventDefault?: () => void }) {
   e?.preventDefault?.();
-  if (typeof window !== "undefined") {
-    try {
-      window.fbq?.("track", "InitiateCheckout");
-    } catch {
-      // ignore
-    }
-    window.location.href = buildCheckoutUrl();
-  }
+  if (typeof window === "undefined") return;
+  fireInitiateCheckout();
+  window.location.href = buildCheckoutUrl();
 }
