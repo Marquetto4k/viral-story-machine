@@ -147,6 +147,18 @@ export function LandingPage() {
     return () => window.clearInterval(pollId);
   }, []);
 
+  // Fallback de segurança: libera após 120s de permanência na página caso a API da Wistia falhe
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      if (!unlockedRef.current) {
+        unlockedRef.current = true;
+        setUnlocked(true);
+        console.log("Conteúdo liberado por fallback de tempo");
+      }
+    }, 120000);
+    return () => window.clearTimeout(timer);
+  }, []);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
       {/* YELLOW COUNTDOWN BAR */}
